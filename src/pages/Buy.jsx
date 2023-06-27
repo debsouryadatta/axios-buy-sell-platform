@@ -63,12 +63,12 @@ const Buy = () => {
   return (
     <>
       <div>
-        <h2 className="text-4xl text-center m-4">Buying Product List</h2>
+        <h2 className="text-xl sm:text-4xl text-center m-4">Buying Product List</h2>
         {/* Searchbar & Categories */}
         <div className="flex flex-col items-center">
           <form className="w-[80%]">
             <div className="flex">
-              <select className="w-[80px] sm:w-[15%]"
+              <select className="w-[80px] sm:w-[15%] outline-none border-gray-300 rounded-md"
                 name="cars"
                 id="cars"
                 onChange={(e) => {
