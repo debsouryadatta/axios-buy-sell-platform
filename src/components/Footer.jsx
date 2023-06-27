@@ -1,5 +1,6 @@
 import React from "react";
 import '../css&js/footer.css'
+import { MailMinus } from 'lucide-react';
 
 const Footer = () => {
   return (
