@@ -9,6 +9,7 @@ import {
   doc,
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { UserAuth } from "../context/AuthContext";
 
 const Sell = () => {
   const [title, setTitle] = useState("");
@@ -20,6 +21,8 @@ const Sell = () => {
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
+
+  const { user} = UserAuth()
 
   const navigate = useNavigate()
 
@@ -41,21 +44,23 @@ const Sell = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      console.log('start');
-      const productDetails = {
-        title,
-        description,
-        picture,
-        price,
-        sellorrent,
-        category,
-        name,
-        contact,
-        address,
-      };
-      await addDoc(collectionRef, productDetails);
-      navigate('/buy')
-      console.log(productDetails);
+      if (!user) {
+        alert('SignIn to publish items')
+      } else{
+        const productDetails = {
+          title,
+          description,
+          picture,
+          price,
+          sellorrent,
+          category,
+          name,
+          contact,
+          address,
+        };
+        await addDoc(collectionRef, productDetails);
+        navigate('/buy')
+      }
     } catch (error) {
       console.log(error);
     }
