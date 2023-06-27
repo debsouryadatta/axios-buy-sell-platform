@@ -68,7 +68,7 @@ const Buy = () => {
         <div className="flex flex-col items-center">
           <form className="w-[80%]">
             <div className="flex">
-              <select
+              <select className="w-[80px] sm:w-[15%]"
                 name="cars"
                 id="cars"
                 onChange={(e) => {
