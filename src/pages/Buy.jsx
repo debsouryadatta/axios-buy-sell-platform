@@ -14,26 +14,42 @@ import {
 
 
 const Buy = () => {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
+  const [searchText, setSearchText] = useState('');
+
   const collectionRef = collection(db, "products");
 
+  const getProductList = async () => {
+    try {
+      let data = await getDocs(collectionRef);
+      data = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      data = data.filter((doc) => doc.sellorrent === "sell");
+      setProducts(data)
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const getProductList = async () => {
-      try {
-        let data = await getDocs(collectionRef);
-        data = data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }));
-        data = data.filter((doc) => doc.sellorrent === "sell");
-        setProducts(data)
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getProductList();
   }, []);
+
+  const handleSearchChange = async () => {
+
+    console.log(searchText);
+    console.log(products);
+    const searchResults = products.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchText.toLowerCase())
+    );
+    console.log(searchResults);
+    setProducts(searchResults)
+  }
 
 
   return (
@@ -56,7 +72,7 @@ const Buy = () => {
                 className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 type="button"
               >
-                All categories{" "}
+                All categories
                 <svg
                   aria-hidden="true"
                   className="w-4 h-4 ml-1"
@@ -80,45 +96,70 @@ const Buy = () => {
                   aria-labelledby="dropdown-button"
                 >
                   <li>
-                    <button
+                    <button onClick={getProductList}
                       type="button"
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Mockups
+                      All
                     </button>
                   </li>
                   <li>
-                    <button
+                    <button onClick={async() => {
+                      await getProductList()
+                      setProducts(products.filter(product => product.category === 'books')) }}
                       type="button"
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Templates
+                      Books
                     </button>
                   </li>
                   <li>
-                    <button
+                    <button onClick={async() => {
+                      await getProductList()
+                      setProducts(products.filter(product => product.category === 'electronics')) }}
                       type="button"
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Design
+                      Electronics
                     </button>
                   </li>
                   <li>
-                    <button
+                    <button onClick={async() => {
+                      await getProductList()
+                      setProducts(products.filter(product => product.category === 'clothing')) }}
                       type="button"
                       className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                     >
-                      Logos
+                      Clothing
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={async() => {
+                      await getProductList()
+                      setProducts(products.filter(product => product.category === 'others')) }}
+                      type="button"
+                      className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Others
                     </button>
                   </li>
                 </ul>
               </div>
               <div className="relative w-full">
-                <input
+                <input onChange={async(e)=> {
+                  setSearchText(e.target.value)
+                  await getProductList();
+                  setProducts(products.filter(
+                    (product) =>
+                      product.title.toLowerCase().includes(searchText.toLowerCase()) ||
+                      product.description.toLowerCase().includes(searchText.toLowerCase())
+                  ))
+                }}
+                value={searchText}
                   type="search"
                   id="search-dropdown"
                   className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                  placeholder="Search Mockups, Logos, Design Templates..."
+                  placeholder="Search for products..."
                   required
                 />
                 <button
@@ -150,14 +191,14 @@ const Buy = () => {
           {products?.map((product) => (
             <div key={product.id} className="product-item">
               <img
-                src={product}
+                src={product.picture}
                 alt={product.title}
                 className="product-image"
               />
               <div className="product-details">
                 <h3>{product.title}</h3>
                 <p>{product.description}</p>
-                <Link to={`/product/${product.id}`}>View Details</Link>
+                <Link to={`/products/${product.id}`}>View Details</Link>
               </div>
             </div>
           ))}

@@ -16,7 +16,7 @@ const Sell = () => {
   const [picture, setPicture] = useState("");
   const [price, setPrice] = useState("");
   const [sellorrent, setSellorrent] = useState("sell");
-  const [category, setCategory] = useState("Books");
+  const [category, setCategory] = useState("books");
   const [name, setName] = useState("");
   const [contact, setContact] = useState("");
   const [address, setAddress] = useState("");
@@ -99,7 +99,7 @@ const Sell = () => {
                     </div>
 
                     <div className="md:col-span-2">
-                      <label htmlFor="city">Upload Product Photo</label>
+                      <label htmlFor="city">Product Photo(less than 1MB)</label>
                       <input
                         accept="image/*"
                         onChange={handlePhotoInputChange}
@@ -137,6 +137,8 @@ const Sell = () => {
                         <select onChange={(e) => setCategory(e.target.value)} value={category}>
                           <option value="books">Books</option>
                           <option value="electronics">Electronics</option>
+                          <option value="clothing">Clothing</option>
+                          <option value="others">Others</option>
                         </select>
                       </div>
                     </div>
