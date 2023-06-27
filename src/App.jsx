@@ -8,7 +8,6 @@ import Sell from "./pages/Sell";
 import Rent from "./pages/Rent";
 import Footer from "./components/Footer";
 import ProductDetails from "./pages/ProductDetails";
-// import Navbar2 from "./components/navbar2";
 
 const App = () => {
   return (
@@ -23,7 +22,6 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/sell" element={<Sell />} />
             <Route path="/products/:id" element={<ProductDetails />} />
-            {/* <Route path="/navbar" element={<Navbar2 />} /> */}
           </Routes>
           <Footer/>
         </AuthContextProvider>
