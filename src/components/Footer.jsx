@@ -1,10 +1,13 @@
 import React from "react";
 import '../css&js/footer.css'
+import { motion } from "framer-motion"
+
 
 const Footer = () => {
   return (
-    <>
-      <footer className="footer">
+    <motion.div whileInView={{ opacity: [0, 1] }}
+      transition={{ duration: 0.9 }}>
+      <footer className="footer bg-blue-gray-800">
         <div className="container">
           <div className="row">
             <div className="footer-col">
@@ -62,23 +65,19 @@ const Footer = () => {
               </div>
             </div>
           </div>
-          <div className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+          <motion.div whileInView={{ opacity: [0, 1] }}
+            transition={{ duration: 0.5 }} className="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
             <br />
-            <hr  />
+            <hr />
             <div>
               <h5 className="text-white mt-[10px]">
                 © 2023 Axios, Inc. All rights reserved.
               </h5>
             </div>
-          </div>
-        </div>
-        <div className="created-by mb-[31px]">
-          <div >
-            <h5 className="text-center">Created by Debsourya, Mrittik and Soumargha</h5>
-          </div>
+          </motion.div>
         </div>
       </footer>
-    </>
+    </motion.div>
   );
 };
 

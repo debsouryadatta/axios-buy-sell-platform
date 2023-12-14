@@ -1,29 +1,31 @@
 import React from "react";
-import Navbar from "./components/Navbar";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import { AuthContextProvider } from "./context/AuthContext";
-import Buy from "./pages/Buy";
-import Sell from "./pages/Sell";
-import Rent from "./pages/Rent";
-import Footer from "./components/Footer";
 import ProductDetails from "./pages/ProductDetails";
+import MainPage from "./pages/MainPage";
+import ProfilePage from "./pages/ProfilePage";
+import AdminPage from "./pages/AdminPage";
+import ProtectedRoute from "./adminComp/ProtectedRoute";
+import ChatPage from "./pages/ChatPage";
+import { ChatContextProvider } from "./context/ChatContext";
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <AuthContextProvider>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Buy />} />
-            <Route path="/buy" element={<Buy />} />
-            <Route path="/rent" element={<Rent />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/sell" element={<Sell />} />
-            <Route path="/products/:id" element={<ProductDetails />} />
-          </Routes>
-          <Footer/>
+          <ChatContextProvider>
+
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<ProfilePage />} />
+              <Route path="/chats" element={<ChatPage />} />
+              <Route path="/cb/admin" element={<ProtectedRoute><AdminPage /></ProtectedRoute>} />
+              <Route path="/products/:id" element={<ProductDetails />} />
+            </Routes>
+          </ChatContextProvider>
         </AuthContextProvider>
       </BrowserRouter>
     </>

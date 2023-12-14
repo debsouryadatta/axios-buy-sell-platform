@@ -1,25 +1,68 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import { db } from "../lib/firebase";
 
 const Login = () => {
 
-  const {signInWithGoogle, user} = UserAuth()
+  const { signInWithGoogle, user } = UserAuth()
 
   const navigate = useNavigate()
 
-  const handleSubmit = async () => {
-    await signInWithGoogle()
-    navigate('/buy')
+  const userUpdate = async () => {
+    if (user) {
+      let userPresent = await getDoc(doc(db, "users", user.uid));
+      if (!userPresent.data()) {
+        //create user on firestore
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid,
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+
+
+        let userChat = await getDoc(doc(db, "userChats", user.uid));
+        console.log(userChat.data());
+        //create empty user chats on firestore
+        if (!userChat.data()){
+          console.log('hello');
+          await setDoc(doc(db, "userChats", user.uid), {});
+        }
+
+      }
+      navigate('/')
+    }
   }
 
-  user && navigate("/buy"); // Redirecting to buy page if user is already logged in
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithGoogle()
+      // await userUpdate();
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    userUpdate();
+  }, [user])
+  
+
+  // user && navigate("/"); // Redirecting to buy page if user is already logged in
 
   return (
     <>
-      <section>
-        <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">
-          <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md">
+      <section className="bg-cover bg-center w-full z-[-10] h-[100vh]"
+        style={{
+          backgroundImage:
+            "url('https://res.cloudinary.com/diyxwdtjd/image/upload/v1701148338/Project%20use/Untitled_design_1_mk6vwc.png')",
+        }}>
+        <div className="flex items-center justify-center ">
+          <div className="xl:mx-auto xl:w-full xl:max-w-sm px-16 py-32 m-20 2xl:max-w-md border border-blue-gray-200 rounded-2xl">
             <div className="mb-2 flex justify-center">
               <svg
                 width="50"
@@ -34,10 +77,10 @@ const Login = () => {
                 ></path>
               </svg>
             </div>
-            <h2 className="text-center text-2xl font-bold leading-tight text-black">
+            <h2 className="text-center text-2xl font-bold leading-tight text-white">
               Log in to your account
             </h2>
-            <p className="mt-2 text-center text-sm text-gray-600 ">
+            <p className="mt-2 text-center text-sm text-white ">
               Don&#x27;t have an account?{" "}
               <Link
                 to="/register"
@@ -49,7 +92,7 @@ const Login = () => {
             </p>
             <div className="mt-3 space-y-3">
               <button
-              onClick={handleSubmit}
+                onClick={handleSubmit}
                 type="button"
                 className=" relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-blue-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none mt-10"
               >
