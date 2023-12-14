@@ -62,7 +62,7 @@ const Login = () => {
             "url('https://res.cloudinary.com/diyxwdtjd/image/upload/v1701148338/Project%20use/Untitled_design_1_mk6vwc.png')",
         }}>
         <div className="flex items-center justify-center ">
-          <div className="xl:mx-auto xl:w-full xl:max-w-sm px-16 py-32 m-20 2xl:max-w-md border border-blue-gray-200 rounded-2xl">
+          <div className="xl:mx-auto xl:w-full xl:max-w-sm px-2 sm:px-16 py-32 m-10 sm:m-20 2xl:max-w-md border border-blue-gray-200 rounded-2xl">
             <div className="mb-2 flex justify-center">
               <svg
                 width="50"
@@ -78,9 +78,9 @@ const Login = () => {
               </svg>
             </div>
             <h2 className="text-center text-2xl font-bold leading-tight text-white">
-              Log in to your account
+              Sign in to your account
             </h2>
-            <p className="mt-2 text-center text-sm text-white ">
+            {/* <p className="mt-2 text-center text-sm text-white ">
               Don&#x27;t have an account?{" "}
               <Link
                 to="/register"
@@ -89,7 +89,7 @@ const Login = () => {
               >
                 Create a free account
               </Link>
-            </p>
+            </p> */}
             <div className="mt-3 space-y-3">
               <button
                 onClick={handleSubmit}
@@ -106,7 +106,7 @@ const Login = () => {
                     <path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"></path>
                   </svg>
                 </span>
-                Log in with Google
+                Sign in with Google
               </button>
             </div>
           </div>

@@ -50,7 +50,7 @@
         input {
           padding: 15px;
           border: none;
-          width: 250px;
+          // width: 250px;
           border-bottom: 1px solid #a7bcff;
           &::placeholder {
             color: rgb(175, 175, 175);
@@ -102,13 +102,18 @@
       @include tablet {
        width: 90%;
       }
+
   
       .sidebar {
         flex: 1;
         background-color: #0f766e;
         position: absolute;
         height: 78.5%;
+        // width: 30%;
         border-radius: 10px;
+        @include mobile {
+          width: 80%;
+         }
   
         .navbar {
           display: flex;
